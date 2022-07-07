@@ -1,7 +1,7 @@
 const message = document.getElementById('message')
 const chatMessage = document.getElementById('chatMessage')
 
-const chatEvent = new EventSource('http://localhost:4000/chat')
+const chatEvent = new EventSource('https://chatapp57.herokuapp.com/chat')
 chatEvent.addEventListener('message', (event) => {
   const div = document.createElement('div')
   div.classList.add('bg-secondary','text-white','py-2','rounded','mt-3','px-2')
