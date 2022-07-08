@@ -1,10 +1,10 @@
 const express = require('express')
 const path = require('path')
-const { EventEmitter } = require('events')
+const expressWs = require('express-ws')
 
 const app = express()
-const chatMessage = []
-const chatEmitter = new EventEmitter()
+expressWs(app)
+const chatMessage = {}
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
@@ -14,25 +14,27 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 app.get('/', (req, res) => { res.render('index') })
 
-app.get('/chat', (req, res) => {
-  res.writeHead(200,{
-    'Content-Type': 'text/event-stream',
-    'Connection': 'keep-alive',
-    'Cache-Control': 'no-cache'
-  })
-  const onNewMessageHandler = (message) => {
-    res.write(`data: ${JSON.stringify({ message })}\n\n`)
+app.ws('/', (ws, req) => {
+  if (!chatMessage.users) {
+    chatMessage.users = []
   }
-  chatEmitter.on('newMessage', onNewMessageHandler)
-  req.on('close', () => {
-    chatEmitter.off('newMessage', onNewMessageHandler)
+  if (!chatMessage.messages) {
+    chatMessage.messages = []
+  }
+  chatMessage.users.push(ws)
+  ws.on('message', (data) => {
+    console.log('receive ->',data)
+    chatMessage.messages.push(data)
+    console.log(chatMessage)
+    for (const user of chatMessage.users) {
+      user.send(data)
+    }
   })
-})
-
-app.post('/chat', (req, res) => {
-  chatMessage.push(req.body.message)
-  chatEmitter.emit('newMessage',req.body.message)
-  res.end()
+  ws.on('close', () => {
+    chatMessage.users =chatMessage.users.filter((user) => {
+      return user !== ws
+    })
+  })
 })
 
 port = process.env.PORT || 4000
