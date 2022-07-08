@@ -4,7 +4,7 @@ const expressWs = require('express-ws')
 const mongoose = require('mongoose')
 const Chat = require('./model/Chat')
 
-mongoose.connect('mongodb://localhost:27017/todo')
+mongoose.connect('mongodb+srv://Admin:Password@monkey.yasgbdt.mongodb.net/?retryWrites=true&w=majority')
 const app = express()
 expressWs(app)
 const chatMessage = {}
