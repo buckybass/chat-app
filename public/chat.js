@@ -1,9 +1,9 @@
 const message = document.getElementById('message')
 const chatMessage = document.getElementById('chatMessage')
 
-const chatEvent = new WebSocket(`ws://${location.host}${location.pathname}`)
+const chatEvent = new WebSocket(`wss://${location.host}${location.pathname}`)
 chatEvent.addEventListener('open', () => {
-  console.log(`ws://${location.host}${location.pathname}`)
+  console.log(`wss://${location.host}${location.pathname}`)
 })
 
 chatEvent.addEventListener('close', () => {
