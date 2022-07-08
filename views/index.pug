@@ -2,13 +2,14 @@ extends _layout
 block content
   h1 ระบบแชท
   hr
-  .bg-dark.rounded.p-3.position-relative(style="height:500px")
+  .bg-dark.rounded.p-3.position-relative.overflow-auto(style="height:500px")
+    each message in messages
+      div.bg-secondary.text-white.py-2.rounded.mt-2.px-2= message.message
     #chatMessage
-    .position-absolute(style="bottom: 0.5rem; left: 0.5rem; right:0.5rem")
-      form(onsubmit="onSendMessage(event)")
-        .input-group
-          input.form-control(id="message" type="text" name='message' placeholder='พิมข้อความ' autocomplete='off' required)
-          button.btn.btn-primary ส่ง
+  form(onsubmit="onSendMessage(event)")
+    .input-group.mt-1
+      input.form-control.bg-secondary(id="message" type="text" name='message' placeholder='พิมข้อความ' autocomplete='off' required)
+      button.btn.btn-primary #[img(src='../send.jpg' style='height:20px')]
 block script
   script(src='/chat.js')
 
