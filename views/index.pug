@@ -1,10 +1,18 @@
 extends _layout
 block content
-  h1 ระบบแชท
+  .d-flex.align-items-center
+    h1.me-auto ระบบแชท
+    a.btn.btn-danger.btn-sm(href="/delete") ลบแชท
   hr
   .bg-dark.rounded.p-3.position-relative.overflow-auto(style="height:500px")
     each message in messages
-      div.bg-secondary.text-white.py-2.rounded.mt-2.px-2= message.message
+      -var d = new Date(message.recordedAt)
+      -var momth = ['มกราคม','กุมภาพันธ','มีนาคม','เมษายน','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม']
+      -var time = d.getHours()+':'+d.getMinutes()
+      -var day = d.getDate()+' '+momth[(d.getMonth()-1)]+' '+d.getFullYear()
+      div.d-flex.bg-secondary.text-white.py-2.rounded.mt-2.px-2
+        div(style="margin-right:auto")= message.message
+        div=day+' '+time
     #chatMessage
   form(onsubmit="onSendMessage(event)")
     .input-group.mt-1

@@ -4,7 +4,10 @@ const schema = mongoose.Schema({
   message: {
     type: String,
     required: true
+  }, recordedAt: {
+    type: Date,
+    default: new Date()
   }
 })
 
-module.exports = mongoose.model('Chat',schema)
+module.exports = mongoose.model('Chat', schema)
