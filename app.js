@@ -33,7 +33,7 @@ app.ws('/', (ws, req) => {
     const chat = await Chat.find()
     const chatCount = await Chat.count()
     for (const user of chatMessage.users) {
-      const timeChat = new Date(chat[chatCount - 1].recordedAt)
+      let timeChat = new Date(chat[chatCount - 1].recordedAt)
       const momth = ['มกราคม','กุมภาพันธ','มีนาคม','เมษายน','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม']
       const time = timeChat.getHours()+':'+timeChat.getMinutes()
       const day = timeChat.getDate()+' '+momth[(timeChat.getMonth()-1)]+' '+timeChat.getFullYear()

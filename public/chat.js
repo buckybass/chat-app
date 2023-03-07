@@ -3,7 +3,7 @@ const boxchat = document.getElementById('boxchat')
 const chatMessage = document.getElementById('chatMessage')
 const time = document.getElementById('time')
 
-const chatEvent = new WebSocket(`wss://${location.host}${location.pathname}`)
+const chatEvent = new WebSocket(`ws://${location.host}${location.pathname}`)
 chatEvent.addEventListener('open', () => {
   console.log(`ws://${location.host}${location.pathname}`)
 })
